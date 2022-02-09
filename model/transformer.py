@@ -18,32 +18,32 @@ except:
 
 
 def get_assignment_map_from_checkpoint(tvars, init_checkpoint):
-  """Compute the union of the current variables and checkpoint variables."""
-  assignment_map = {}
-  initialized_variable_names = {}
+    """Compute the union of the current variables and checkpoint variables."""
+    assignment_map = {}
+    initialized_variable_names = {}
 
-  name_to_variable = collections.OrderedDict()
-  for var in tvars:
-    name = var.name
-    m = re.match("^(.*):\\d+$", name)
-    if m is not None:
-      name = m.group(1)
-    name_to_variable[name] = var
+    name_to_variable = collections.OrderedDict()
+    for var in tvars:
+        name = var.name
+        m = re.match("^(.*):\\d+$", name)
+        if m is not None:
+          name = m.group(1)
+        name_to_variable[name] = var
 
-  init_vars = tf.train.list_variables(init_checkpoint)
+    init_vars = tf.train.list_variables(init_checkpoint)
 
-  assignment_map = collections.OrderedDict()
-  for x in init_vars:
-    (name, var) = (x[0], x[1])
-    #if name not in name_to_variable or ("mlp" in name or "/beta" in name or "/gamma" in name):
-    if name not in name_to_variable or (not name.startswith("encoder") and not name.startswith("transformer/num_blocks")):
-        print("SKIP variable {}".format(name))
-        continue
-    assignment_map[name] = name
-    initialized_variable_names[name] = 1
-    initialized_variable_names[name + ":0"] = 1
+    assignment_map = collections.OrderedDict()
+    for x in init_vars:
+        (name, var) = (x[0], x[1])
+        #if name not in name_to_variable or ("mlp" in name or "/beta" in name or "/gamma" in name):
+        if name not in name_to_variable or (not name.startswith("encoder") and not name.startswith("transformer/num_blocks")):
+            print("SKIP variable {}".format(name))
+            continue
+        assignment_map[name] = name
+        initialized_variable_names[name] = 1
+        initialized_variable_names[name + ":0"] = 1
 
-  return (assignment_map, initialized_variable_names)
+    return (assignment_map, initialized_variable_names)
 
 
 class _AveragePooling:
@@ -233,7 +233,7 @@ class TextTransformerNet:
 
     def _predict(self, features, model_output):
         outputs = dict(
-            oneid=model_output.oneid,
+            id=model_output.id,
             feature=tf.reduce_join(
                 tf.as_string(model_output.feature, shortest=True, scientific=False),
                 axis=1,
@@ -305,7 +305,7 @@ class TextTransformerNet:
             # Do inference
             if type(user_embedding) is list:
                 if self._predict_configs.hop > 0:
-                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    print("Warning!")
                     print("You choose the {}/{} output".format(
                         self._predict_configs.hop, len(user_embedding)
                     ))
@@ -314,7 +314,7 @@ class TextTransformerNet:
                     user_embedding = user_embedding[-1]
 
             return Namespace(
-                oneid=features["oneid"],
+                id=features["id"],
                 feature=user_embedding
             )
         else:

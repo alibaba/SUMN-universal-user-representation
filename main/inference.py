@@ -38,7 +38,7 @@ def _do_prediction(result_iter, writer, args, model_args):
 
     for i, prediction in enumerate(result_iter, 1):
         record = [
-            prediction["oneid"],
+            prediction["id"],
             prediction["feature"],
             int(prediction["length"])
         ]

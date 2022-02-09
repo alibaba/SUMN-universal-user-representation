@@ -25,7 +25,7 @@ class OdpsDataLoader:
         indices = tf.string_split([text], " ")
         return tf.string_to_number(indices.values, out_type=tf.int64)
 
-    def _train_data_parser(self, oneid, history, target_weights, query_idx, word_idx, target_words):
+    def _train_data_parser(self, id, history, target_weights, query_idx, word_idx, target_words):
         history = self._parse_indices(history)
         query_idx = self._parse_indices(query_idx)
         word_idx = self._parse_indices(word_idx)
@@ -51,7 +51,7 @@ class OdpsDataLoader:
             result["target_weights"] = target_weights
 
         result.update({
-            "oneid": oneid,
+            "id": id,
             "history_words": tf.reshape(history_words, [-1, self._max_words_per_query]),
             "target_words": target_words,
             "target_len": target_len
@@ -59,7 +59,7 @@ class OdpsDataLoader:
 
         return result, tf.constant(0, dtype=tf.int32) # fake label
 
-    def _test_data_parser(self, oneid, history, _, query_idx, word_idx):
+    def _test_data_parser(self, id, history, _, query_idx, word_idx):
         history = self._parse_indices(history)
         query_idx = self._parse_indices(query_idx)
         word_idx = self._parse_indices(word_idx)
@@ -74,7 +74,7 @@ class OdpsDataLoader:
         history_words = tf.sparse_tensor_to_dense(history_word_tensor, validate_indices=False)
 
         return {
-            "oneid": oneid,
+            "id": id,
             "history_words": tf.reshape(history_words, [-1, self._max_words_per_query]),
             "history_length": tf.shape(history)[-1]
         }, tf.constant(0, dtype=tf.int32)  # fake label
