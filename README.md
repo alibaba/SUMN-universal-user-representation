@@ -1,7 +1,9 @@
 # SUMN-universal-user-representation
 
 Exploiting Behavioral Consistence for Universal User Representation (AAAI 2021)
+
 By Jie Gu*, Feng Wang*, Qinghui Sun, Zhiquan Ye, Xiaoxiao Xu, Jingmin Chen, Jun Zhang
+
 arxiv: https://arxiv.org/abs/2012.06146
 
 ## Introduction
@@ -9,7 +11,7 @@ In this paper, we focus on universal (general-purpose) user representation. The 
 
 ## Usage
 The project is developed based on [Alibaba Cloud](https://www.alibabacloud.com/help/en/): [PAI](https://www.alibabacloud.com/product/machine-learning) tensorflow, [MaxCompute](https://www.alibabacloud.com/product/maxcompute) (a data processing platform for large-scale data warehousing) and [OSS](https://www.alibabacloud.com/product/object-storage-service) (a storage service). 
-The related APIs and functions are: tf.python_io.TableWriter in dumper.py, tf.data.TableRecordDataset in loader.py, tf.gfile in train.py, gfile in inference.py, gfile in helper.py, and set_dist_env in env.py. You can revise these APIs and functions as needed, . 
+The related APIs and functions are: tf.python_io.TableWriter in dumper.py, tf.data.TableRecordDataset in loader.py, tf.gfile in train.py, gfile in inference.py, gfile in helper.py, and set_dist_env in env.py. You can revise these APIs and functions if needed. 
 
 Script for training the representation model
 ```
@@ -41,7 +43,7 @@ odpscmd -e "use your_own_maxcompute_project; pai \
         "
 ```
 
-Script for infering the representations
+Script for representation inference
 ```
 rm model.tar.gz
 tar -czf model.tar.gz ./data_dumper ./data_loader ./main ./model ./trainer ./util
