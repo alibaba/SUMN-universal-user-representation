@@ -16,7 +16,7 @@ The related APIs and functions are: tf.python_io.TableWriter in dumper.py, tf.da
 Script for training the representation model
 ```
 rm model.tar.gz
-tar -czf model.tar.gz ./data_dumper ./data_loader ./main ./model ./trainer ./util
+tar -czf model.tar.gz ./data_dumper ./data_loader ./main ./model ./util
 
 ITERATION=1000000
 SNAPSHOT=100000
@@ -46,7 +46,7 @@ odpscmd -e "use your_own_maxcompute_project; pai \
 Script for representation inference
 ```
 rm model.tar.gz
-tar -czf model.tar.gz ./data_dumper ./data_loader ./main ./model ./trainer ./util
+tar -czf model.tar.gz ./data_dumper ./data_loader ./main ./model ./util
 
 INPUT_TABLE=your_own_maxcompute_table_for_inferring_inputs
 OUTPUT_TABLE=your_own_maxcompute_table_for_inferring_outputs
